@@ -1,12 +1,11 @@
 const readline = require('readline');
+const { listaPacientes } = require('./cadastro');
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
     terminal: false,
 });
-
-const { pacientes } = require('./cadastro');
 
 function agendarMenu() {
     console.log("Agenda");
@@ -40,7 +39,7 @@ function agendarConsulta() {
             rl.question("Digite a hora inicial da consulta (HHMM): ", (horaInicial) => {
                 rl.question("Digite a hora final da consulta (HHMM): ", (horaFinal) => {
 
-                    const paciente = pacientes.find(paciente => paciente.cpf === cpf);
+                    const paciente = listaPacientes.find(paciente => paciente.cpf === cpf);
 
                     if (!paciente) {
                         console.log("CPF:", cpf);

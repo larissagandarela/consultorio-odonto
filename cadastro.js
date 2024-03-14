@@ -1,5 +1,6 @@
 const readline = require('readline');
 const moment = require('moment');
+const fs = require('fs');
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -7,14 +8,25 @@ const rl = readline.createInterface({
     terminal: false,
 });
 
-let listaPacientes = []; 
+let listaPacientes = carregarPacientes();
 
 module.exports = { adicionarPaciente, listaPacientes };
 
+function carregarPacientes() {
+    try {
+        const data = fs.readFileSync('pacientes.json');
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+}
+
 function salvarPacientes() {
-    listaPacientes = [...listaPacientes]; 
+    const data = JSON.stringify(listaPacientes);
+    fs.writeFileSync('pacientes.json', data);
     console.log('Pacientes salvos com sucesso!');
 }
+
 function verificarPacienteSalvo(cpf) {
     const pacienteSalvo = listaPacientes.find(paciente => paciente.cpf === cpf);
     if (pacienteSalvo) {
@@ -66,7 +78,6 @@ function adicionarPaciente() {
 
                 listaPacientes.push(paciente);
                 console.log("Paciente cadastrado com sucesso!");
-
 
                 verificarPacienteSalvo(cpf);
                 salvarPacientes();
