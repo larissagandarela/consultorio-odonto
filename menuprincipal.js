@@ -1,15 +1,12 @@
 const readline = require('readline');
 const { subMenu } = require('./submenu');
 const { agendarMenu } = require('./menuagenda');
-module.exports = { subMenu, agendarMenu };
-
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
     terminal: false,
 });
-
 
 function menu() {
     console.log("Menu Principal");
@@ -37,4 +34,6 @@ function menu() {
     });
 }
 
-menu();
+module.exports = { menu };
+
+menu(); 

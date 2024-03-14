@@ -1,7 +1,5 @@
 const readline = require('readline');
 const { adicionarPaciente } = require('./cadastro');
-module.exports = { adicionarPaciente, subMenu };
-
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -9,13 +7,12 @@ const rl = readline.createInterface({
     terminal: false,
 });
 
-
 function subMenu() {
     console.log("Menu do Cadastro de Pacientes");
     console.log("1 - Cadastrar novo paciente");
     console.log("2 - Excluir paciente");
     console.log("3 - Listar pacientes (ordenado por CPF)");
-    console.log("4 - Listar pacientes (ordenado por nome)")
+    console.log("4 - Listar pacientes (ordenado por nome)");
     console.log("5 - Voltar p/ menu principal");
 
     rl.question("Digite o número da opção desejada: ", (opcao) => {
@@ -25,17 +22,22 @@ function subMenu() {
                 adicionarPaciente();
                 break;
             case '2':
-                console.log("Função Agenda chamada.");
+                console.log("Função Excluir paciente chamada.");
                 break;
             case '3':
-                console.log("Encerrando o programa...");
-                rl.close();
+                console.log("Listar pacientes (ordenado por CPF) chamada.");
                 break;
+            case '4':
+                console.log("Listar pacientes (ordenado por nome) chamada.");
+                break;
+            case '5':
+                console.log("Voltando para o menu principal...");
+                break; // Não é necessário fazer mais nada, o menu principal já será exibido novamente
             default:
                 console.log("Opção inválida!");
-                menu();
+                subMenu(); // Chamada recursiva para exibir novamente o submenu
         }
     });
 }
 
-
+module.exports = { subMenu };

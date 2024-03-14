@@ -1,7 +1,5 @@
 const readline = require('readline');
 const moment = require('moment');
-const fs = require('fs');
-
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -9,10 +7,22 @@ const rl = readline.createInterface({
     terminal: false,
 });
 
-let pacientes = []; 
+let listaPacientes = []; 
 
-module.exports = { adicionarPaciente, pacientes };
+module.exports = { adicionarPaciente, listaPacientes };
 
+function salvarPacientes() {
+    listaPacientes = [...listaPacientes]; 
+    console.log('Pacientes salvos com sucesso!');
+}
+function verificarPacienteSalvo(cpf) {
+    const pacienteSalvo = listaPacientes.find(paciente => paciente.cpf === cpf);
+    if (pacienteSalvo) {
+        console.log(`Paciente com CPF ${cpf} está salvo.`);
+    } else {
+        console.log(`Paciente com CPF ${cpf} não está salvo.`);
+    }
+}
 
 function adicionarPaciente() {
     rl.question("Digite o CPF do paciente: ", (cpf) => {
@@ -22,7 +32,7 @@ function adicionarPaciente() {
             return;
         }
 
-        if (pacientes.some(paciente => paciente.cpf === cpf)) {
+        if (listaPacientes.some(paciente => paciente.cpf === cpf)) {
             console.log("Já existe um paciente cadastrado com este CPF!");
             adicionarPaciente();
             return;
@@ -54,48 +64,14 @@ function adicionarPaciente() {
                     dataNascimento: dataNascimento,
                 };
 
-                pacientes.push(paciente);
+                listaPacientes.push(paciente);
                 console.log("Paciente cadastrado com sucesso!");
 
-                
+
+                verificarPacienteSalvo(cpf);
                 salvarPacientes();
-                mostrarMenuAdicional();
             });
         });
-    });
-}
-
-function mostrarMenuAdicional() {
-    console.log("\nO que deseja fazer em seguida?");
-    console.log("1 - Cadastrar outro paciente");
-    console.log("2 - Voltar ao menu principal");
-    console.log("3 - Encerrar o programa");
-
-    rl.question("Digite o número da opção desejada: ", (opcao) => {
-        switch (opcao.trim()) {
-            case '1':
-                adicionarPaciente();
-                break;
-            case '2':
-                break;
-            case '3':
-                console.log("Encerrando o programa...");
-                rl.close();
-                break;
-            default:
-                console.log("Opção inválida!");
-                mostrarMenuAdicional();
-        }
-    });
-}
-
-function salvarPacientes() {
-    fs.writeFile('pacientes.json', JSON.stringify(pacientes), (err) => {
-        if (err) {
-            console.error('Erro ao salvar os pacientes:', err);
-            return;
-        }
-        console.log('Pacientes salvos com sucesso!');
     });
 }
 
