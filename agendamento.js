@@ -9,7 +9,7 @@ const rl = readline.createInterface({
 
 let listaConsultas = carregarConsultas();
 
-module.exports = { agendarConsulta, listaConsultas };
+module.exports = { agendarConsulta, listaConsultas, adicionarConsulta };
 
 function carregarConsultas() {
     try {
@@ -37,6 +37,20 @@ function verificarSobreposicao(dataConsulta, horaIni, minIni, horaFin, minFin) {
 
         return (inicioProposto < fimConsulta && fimProposto > inicioConsulta);
     });
+}
+
+function adicionarConsulta(cpf, consulta) {
+    const paciente = listaPacientes.find(paciente => paciente.cpf === cpf);
+    if (paciente) {
+        if (!paciente.consultas) {
+            paciente.consultas = [];
+        }
+        paciente.consultas.push(consulta);
+        console.log("Consulta agendada com sucesso!");
+        salvarPacientes();
+    } else {
+        console.log(`Não foi possível encontrar um paciente com o CPF ${cpf}.`);
+    }
 }
 
 function agendarConsulta() {
@@ -107,3 +121,5 @@ function agendarConsulta() {
         });
     });
 }
+
+

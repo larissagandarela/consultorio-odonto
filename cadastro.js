@@ -133,3 +133,5 @@ function verificarIdade(dataNascimento) {
     const idade = moment().diff(dataNascimentoMoment, 'years');
     return idade >= 13;
 }
+
+module.exports = { adicionarPaciente, salvarPacientes, listaPacientes };

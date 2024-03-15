@@ -1,5 +1,7 @@
 const readline = require('readline');
 const { adicionarPaciente } = require('./cadastro');
+const { excluirPaciente } = require('./excluir');
+
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -22,7 +24,9 @@ function subMenu() {
                 adicionarPaciente();
                 break;
             case '2':
-                console.log("Função Excluir paciente chamada.");
+                rl.question("Digite o CPF do paciente que deseja excluir: ", (cpf) => {
+        excluirPaciente(cpf);
+                });
                 break;
             case '3':
                 console.log("Listar pacientes (ordenado por CPF) chamada.");
@@ -32,10 +36,10 @@ function subMenu() {
                 break;
             case '5':
                 console.log("Voltando para o menu principal...");
-                break; // Não é necessário fazer mais nada, o menu principal já será exibido novamente
+                break; 
             default:
                 console.log("Opção inválida!");
-                subMenu(); // Chamada recursiva para exibir novamente o submenu
+                subMenu(); 
         }
     });
 }
