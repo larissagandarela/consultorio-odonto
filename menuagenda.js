@@ -3,6 +3,8 @@ const readline = require('readline');
 const GestorConsultas = require('./agendamento');
 const ExcluirAgendamento = require('./excluiragenda');
 
+
+
 class MenuAgenda {
     constructor() {
         this.rl = readline.createInterface({
@@ -34,8 +36,7 @@ class MenuAgenda {
                     });
                     break;
                 case '3':
-                    // Implemente a lógica para listar a agenda
-                    console.log("Listar agenda - Implementação pendente");
+                    console.log("Voltar para o menu principal - Implementação pendente");
                     break;
                 case '4':
                     // Implemente a lógica para voltar ao menu principal, se necessário

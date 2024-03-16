@@ -1,6 +1,8 @@
 const readline = require('readline');
 const { GestorPacientes } = require('./cadastro');
 const ExcluirPaciente = require('./excluirpaciente');
+const ListagemPacientes = require('./listagempaciente');
+
 
 class SubMenu {
     constructor() {
@@ -31,10 +33,10 @@ class SubMenu {
                     });
                     break;
                 case '3':
-                    // Seu código para listar pacientes por CPF
+                    new ListagemPacientes().listarPorCPF();
                     break;
                 case '4':
-                    // Seu código para listar pacientes por nome
+                    new ListagemPacientes().listarPorNome();
                     break;
                 case '5':
                     console.log("Voltando para o menu principal...");
