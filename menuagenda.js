@@ -2,8 +2,8 @@ const fs = require('fs');
 const readline = require('readline');
 const GestorConsultas = require('./agendamento');
 const ExcluirAgendamento = require('./excluiragenda');
-
-
+const ListagemAgendamento = require('./listagemagenda');
+const MenuPrincipal = require('./menuprincipal');
 
 class MenuAgenda {
     constructor() {
@@ -12,6 +12,7 @@ class MenuAgenda {
             output: process.stdout,
             terminal: false,
         });
+        this.gestorConsultas = new GestorConsultas();
     }
 
     exibirMenu() {
@@ -36,11 +37,22 @@ class MenuAgenda {
                     });
                     break;
                 case '3':
-                    console.log("Voltar para o menu principal - Implementação pendente");
+                    this.rl.question("Deseja listar toda a agenda (T) ou a agenda de um período (P)? ", (opcao) => {
+                        if (opcao.trim().toUpperCase() === 'T') {
+                            new ListagemAgendamento(this.gestorConsultas).listarTodaAgenda();
+                        } else if (opcao.trim().toUpperCase() === 'P') {
+                            this.rl.question("Digite a data inicial (DD/MM/AAAA): ", (dataInicial) => {
+                                this.rl.question("Digite a data final (DD/MM/AAAA): ", (dataFinal) => {
+                                    new ListagemAgendamento(this.gestorConsultas).listarAgendaPeriodo(dataInicial, dataFinal);
+                                });
+                            });
+                        } else {
+                            console.log("Opção inválida!");
+                        }
+                    });
                     break;
                 case '4':
-                    // Implemente a lógica para voltar ao menu principal, se necessário
-                    console.log("Voltar para o menu principal - Implementação pendente");
+                    new MenuPrincipal().exibirMenu();
                     break;
                 default:
                     console.log("Opção inválida!");
