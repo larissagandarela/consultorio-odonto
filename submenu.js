@@ -2,10 +2,10 @@ const readline = require('readline');
 const { GestorPacientes } = require('./cadastro');
 const ExcluirPaciente = require('./excluirpaciente');
 const ListagemPacientes = require('./listagempaciente');
-const MenuPrincipal = require('./menuprincipal');
 
 class SubMenu {
-    constructor() {
+    constructor(menuPrincipal) {
+        this.menuPrincipal = menuPrincipal;
         this.rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout,
@@ -39,7 +39,7 @@ class SubMenu {
                     new ListagemPacientes().listarPorNome();
                     break;
                 case '5':
-                    new MenuPrincipal().exibirMenu();
+                    this.menuPrincipal.exibirMenu();
                     break;
                 default:
                     console.log("Opção inválida!");

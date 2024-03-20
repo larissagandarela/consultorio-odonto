@@ -1,6 +1,4 @@
 const readline = require('readline');
-const SubMenu = require('./submenu');
-const MenuAgenda = require('./menuagenda');
 
 class MenuPrincipal {
     constructor() {
@@ -12,6 +10,9 @@ class MenuPrincipal {
     }
 
     exibirMenu() {
+        const SubMenu = require('./submenu'); 
+        const MenuAgenda = require('./menuagenda'); 
+
         console.log("Menu Principal");
         console.log("1 - Cadastro de pacientes");
         console.log("2 - Agenda");
@@ -21,10 +22,12 @@ class MenuPrincipal {
             console.log(opcao);
             switch (opcao.trim()) {
                 case '1':
-                    new SubMenu().exibirSubMenu();
+                    const subMenu = new SubMenu(this); 
+                    subMenu.exibirSubMenu();
                     break;
                 case '2':
-                    new MenuAgenda().exibirMenu();
+                    const menuAgenda = new MenuAgenda();
+                    menuAgenda.exibirMenu();
                     break;
                 case '3':
                     console.log("Encerrando o programa...");
@@ -39,5 +42,6 @@ class MenuPrincipal {
 }
 
 module.exports = MenuPrincipal;
+
 
 new MenuPrincipal().exibirMenu();
