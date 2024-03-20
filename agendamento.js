@@ -54,18 +54,18 @@ class GestorConsultas {
     
 
     adicionarConsulta(cpf, consulta) {
-        const paciente = listaPacientes.find(paciente => paciente.cpf === cpf);
+        const paciente = this.gestorPacientes.listaPacientes.find(paciente => paciente.cpf === cpf);
         if (paciente) {
             if (!paciente.consultas) {
                 paciente.consultas = [];
             }
             paciente.consultas.push(consulta);
             console.log("Consulta agendada com sucesso!");
-            salvarPacientes();
+            this.gestorPacientes.salvarPacientes(); 
         } else {
             console.log(`Não foi possível encontrar um paciente com o CPF ${cpf}.`);
         }
-    }
+    }    
 
     async agendarConsulta() {
         this.rl.question("Digite o CPF do paciente: ", async (cpf) => {
@@ -91,9 +91,10 @@ class GestorConsultas {
     
                         const totalMinutosIni = horaIni * 60 + minIni;
                         const totalMinutosFin = horaFin * 60 + minFin;
+                        const duracaoConsulta = (totalMinutosFin - totalMinutosIni) / 60; 
     
-                        if (totalMinutosIni < 480 || totalMinutosIni > 1140 || totalMinutosFin < 480 || totalMinutosFin > 1140) {
-                            console.log("Erro: a hora inicial e a hora final devem estar entre 8:00 e 19:00");
+                        if (duracaoConsulta <= 0) {
+                            console.log("Erro: A hora final da consulta deve ser posterior à hora inicial.");
                             this.rl.close();
                             return;
                         }
@@ -118,11 +119,14 @@ class GestorConsultas {
                                     cpf: cpf,
                                     data: dataConsulta,
                                     horaInicial: horaInicial,
-                                    horaFinal: horaFinal
+                                    horaFinal: horaFinal,
+                                    nome: pacienteExistente.nome,
+                                    dataNascimento: pacienteExistente.dataNascimento,
+                                    tempo: duracaoConsulta.toFixed(2) 
                                 };
     
                                 this.listaConsultas.push(agendamento);
-                                this.salvarConsultas(); 
+                                this.salvarConsultas();
                                 console.log("Agendamento realizado com sucesso!");
                                 this.rl.close();
                             }
@@ -135,6 +139,7 @@ class GestorConsultas {
             });
         });
     }
+    
 }  
 
 module.exports = GestorConsultas;

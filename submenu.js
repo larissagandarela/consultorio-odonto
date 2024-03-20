@@ -2,7 +2,7 @@ const readline = require('readline');
 const { GestorPacientes } = require('./cadastro');
 const ExcluirPaciente = require('./excluirpaciente');
 const ListagemPacientes = require('./listagempaciente');
-
+const MenuPrincipal = require('./menuprincipal');
 
 class SubMenu {
     constructor() {
@@ -39,7 +39,7 @@ class SubMenu {
                     new ListagemPacientes().listarPorNome();
                     break;
                 case '5':
-                    console.log("Voltando para o menu principal...");
+                    new MenuPrincipal().exibirMenu();
                     break;
                 default:
                     console.log("Opção inválida!");
