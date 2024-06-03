@@ -1,0 +1,22 @@
+# Arquivos gerados pelo npm ou yarn
+node_modules/
+package-lock.json
+yarn.lock
+
+# Arquivos de ambiente
+.env
+
+# Logs
+logs/
+*.log
+
+# Arquivos de build
+/build
+
+# Arquivos de configuração de IDEs
+.vscode/
+.idea/
+
+# Outros
+.DS_Store
+Thumbs.db
